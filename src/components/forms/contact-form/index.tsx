@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { navigate } from 'gatsby'
 import { ContactInputs, contactSchema } from '../../../utils/form-validators'
+import { useFormState } from 'react-hook-form'
 
 const encode = (data: Record<string, string>): string => Object.keys(data)
   .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
@@ -17,17 +18,19 @@ const ContactForm: React.FC<Props> = ({ navigateTarget }) => {
   const {
     register,
     handleSubmit,
-    errors,
-    formState
+    control
   } = useForm<ContactInputs>({
     reValidateMode: 'onSubmit',
     resolver: yupResolver(contactSchema)
   })
 
   const {
+    errors,
     isSubmitting,
     isSubmitSuccessful
-  } = formState
+  } = useFormState<ContactInputs>({
+    control: control
+  })
 
   const [formError, setFormError] = useState<string | null>(null)
 
@@ -79,7 +82,7 @@ const ContactForm: React.FC<Props> = ({ navigateTarget }) => {
       </div>
       <div className='form-floating mb-3'>
         <input
-          ref={register}
+          {...register('name')}
           name='name'
           id='inputName'
           aria-labelledby='inputNameLabel'
@@ -101,7 +104,7 @@ const ContactForm: React.FC<Props> = ({ navigateTarget }) => {
       </div>
       <div className='form-floating mb-3'>
         <input
-          ref={register}
+          {...register('email')}
           name='email'
           id='inputEmail'
           aria-labelledby='inputEmailLabel'
@@ -122,7 +125,7 @@ const ContactForm: React.FC<Props> = ({ navigateTarget }) => {
       </div>
       <div className='form-floating mb-3'>
         <textarea
-          ref={register}
+          {...register('message')}
           name='message'
           id='inputMessage'
           aria-labelledby='inputMessageLabel'

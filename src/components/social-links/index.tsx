@@ -12,7 +12,7 @@ import {
   Github,
   Instagram,
   Patreon,
-  PicartoDotTv,
+  Picartodottv,
   Pinterest,
   Steam,
   Telegram,
@@ -203,7 +203,7 @@ const SocialLinks: React.FC<Props> = ({ data }: Props) => {
               className='icon-link'
               tabIndex={0}
             >
-              <PicartoDotTv size='32px' className='icon picarto' />
+              <Picartodottv size='32px' className='icon picarto' />
             </a>
           </div>
       }
